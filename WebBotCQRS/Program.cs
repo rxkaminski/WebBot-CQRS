@@ -1,5 +1,8 @@
+using FluentValidation;
 using MediatR;
 using System.Reflection;
+using WebBotCQRS.Middleware;
+using WebBotCQRS.PiplineBehaviors;
 using WebBotCQRS.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,8 +24,10 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 });
 
 builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
+builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+builder.Services.AddTransient<ExceptionHandlingMiddleware>();
 builder.Services.AddSwaggerGen();
-
 builder.Services.AddScoped<IWebResponseService, WebResponseService>();
 
 var app = builder.Build();
@@ -34,10 +39,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();

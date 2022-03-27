@@ -18,9 +18,6 @@ namespace WebBotCQRS.Controllers
         [HttpGet("jsontoxml/{jsonEndPoint}")]
         public async Task<IActionResult> JsonToXml(string jsonEndPoint)
         {
-            if (string.IsNullOrWhiteSpace(jsonEndPoint))
-                return new StatusCodeResult(400);
-
             var result = await mediator.Send(new JsonToXmlConvertRequest(jsonEndPoint));
 
             if (string.IsNullOrEmpty(result))

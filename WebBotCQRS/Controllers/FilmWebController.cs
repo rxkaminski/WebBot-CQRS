@@ -18,9 +18,6 @@ namespace WebBotCQRS.Controllers
         [HttpGet("search/games/{gameName}")]
         public async Task<IActionResult> SearchGames(string gameName)
         {
-            if (string.IsNullOrWhiteSpace(gameName))
-                return new StatusCodeResult(400);
-
             var result = await mediator.Send(new SearchGamesRequest(gameName));
 
             return new JsonResult(result);
@@ -34,9 +31,6 @@ namespace WebBotCQRS.Controllers
         [HttpGet("search/films/{title}")]
         public async Task<IActionResult> SearchFilms(string title)
         {
-            if (string.IsNullOrWhiteSpace(title))
-                return new StatusCodeResult(400);
-
             var result = await mediator.Send(new SearchFilmsRequest(title));
 
             return new JsonResult(result);
@@ -50,9 +44,6 @@ namespace WebBotCQRS.Controllers
         [HttpGet("film/{partUri}")]
         public async Task<IActionResult> Film(string partUri)
         {
-            if (string.IsNullOrWhiteSpace(partUri))
-                return new StatusCodeResult(400);
-
             var result = await mediator.Send(new FilmRequest(partUri));
 
             return new JsonResult(result);

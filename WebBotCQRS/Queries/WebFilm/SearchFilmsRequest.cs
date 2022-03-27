@@ -16,11 +16,11 @@ namespace WebBotCQRS.Queries.WebFilm
         }
     }
 
-    public class SeaFilmsRequestHandler : IRequestHandler<SearchFilmsRequest, SearchRowViewModel[]>
+    public class SearchFilmsRequestHandler : IRequestHandler<SearchFilmsRequest, SearchRowViewModel[]>
     {
         private readonly IWebResponseService webResponseService;
 
-        public SeaFilmsRequestHandler(IWebResponseService webResponseService)
+        public SearchFilmsRequestHandler(IWebResponseService webResponseService)
         {
             this.webResponseService = webResponseService;
         }
